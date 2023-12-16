@@ -36,14 +36,14 @@ public @Data class User implements UserDetails {
 	private long id;
 
 	@Column(name = "email", unique = true)
-	@NotBlank(message = "Email must be provided")
+	@NotBlank(message = "O e-mail deve ser fornecido")
 	private String email;
 
-	@NotBlank(message = "Name must be provided")
+	@NotBlank(message = "O nome deve ser fornecido")
 	private String name;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@NotBlank(message = "Password must be not null")
+	@NotBlank(message = "A senha deve ser fornecida")
 	private String password;
 
 	@JsonProperty(access = Access.WRITE_ONLY)

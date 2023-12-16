@@ -31,7 +31,7 @@ public class UserE2ETest {
 			.body(BodyInserters.fromValue(bodyMap))
 			.exchange()
 			.expectStatus().isBadRequest()
-			.expectBody().jsonPath("password").isEqualTo("Password must be not null");
+			.expectBody().jsonPath("password").isEqualTo("A senha deve ser fornecida");
 
 	    bodyMap.put("password","123456");
 	    // after put the password it is expected to work properly.
