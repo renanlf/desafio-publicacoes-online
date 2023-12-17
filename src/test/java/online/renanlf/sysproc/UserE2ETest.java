@@ -21,7 +21,7 @@ public class UserE2ETest {
 	@Order(1)
 	public void postUser(@Autowired WebTestClient webClient) throws Exception {
 		var bodyMap = new HashMap<String, String>();
-	    bodyMap.put("email","leandrorenanf@gmail.com");
+	    bodyMap.put("email","renanf@gmail.com");
 	    bodyMap.put("name","Renan Fernandes");
 		
 	    // expect to not allow when password is not set
