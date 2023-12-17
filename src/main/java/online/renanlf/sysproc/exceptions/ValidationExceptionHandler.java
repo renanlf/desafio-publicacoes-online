@@ -1,5 +1,6 @@
 package online.renanlf.sysproc.exceptions;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class ValidationExceptionHandler {
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
 			String fieldName = ((FieldError) error).getField();
@@ -32,5 +33,11 @@ public class ValidationExceptionHandler {
 			errors.put(fieldName, errorMessage);
 		});
 		return errors;
+	}
+	
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ExceptionHandler(DuplicateProtocolException.class)
+	public Map<String, String> handleDuplicateProtocolException(DuplicateProtocolException ex) {
+		return Collections.singletonMap("protocol", ex.getMessage());
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import online.renanlf.sysproc.exceptions.DuplicateProtocolException;
 import online.renanlf.sysproc.model.Prosecution;
 import online.renanlf.sysproc.repository.ProsecutionRepository;
 
@@ -24,8 +25,10 @@ public class ProsecutionService {
 	}
 
 	public Prosecution save(Prosecution prosecution, String email) {
-		prosecution.setUser(userService.findByEmail(email));
+		if(repo.findByProtocol(prosecution.getProtocol()).isPresent())
+			throw new DuplicateProtocolException(prosecution.getProtocol());
 		
+		prosecution.setUser(userService.findByEmail(email));		
 		return repo.save(prosecution);
 	}
 

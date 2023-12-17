@@ -147,5 +147,20 @@ public class ProsecutionE2ETest {
 			.expectBody().isEmpty();
 	
 	}
+	
+	@Test
+	@Order(6)
+	public void postDuplicateProsecutionProtocol(@Autowired WebTestClient webClient) {
+		var bodyMap = new HashMap<String, String>();
+		bodyMap.put("protocol", "123456");
+		bodyMap.put("description", "This is a prosecution duplicated");
+		bodyMap.put("openingDate", "2015-01-12");
+
+		webClient.post().uri("/prosecutions").header("Authorization", "Bearer " + token)
+				.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(bodyMap)).exchange()
+				.expectStatus().isEqualTo(409)
+				.expectBody().jsonPath("protocol").isEqualTo("Protocolo 123456 já existe!");
+
+	}
 
 }

@@ -10,6 +10,8 @@ import online.renanlf.sysproc.model.Prosecution;
 public interface ProsecutionRepository extends JpaRepository<Prosecution, Long> {
 	
 	List<Prosecution> findByUserEmail(String email);
+	
+	Optional<Prosecution> findByProtocol(String protocol);
 
 	Optional<Prosecution> findByUserEmailAndProtocol(String email, String protocol);
 
