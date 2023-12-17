@@ -41,7 +41,7 @@ public class UserE2ETest {
 			.body(BodyInserters.fromValue(bodyMap))
 			.exchange()
 			.expectStatus().isOk()
-		    .expectBody().jsonPath("email").isEqualTo("leandrorenanf@gmail.com");
+		    .expectBody().jsonPath("email").isEqualTo("renanf@gmail.com");
 		
 		// expects to block if one tries to add the same e-mail
 		webClient
