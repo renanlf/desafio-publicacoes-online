@@ -6,14 +6,15 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import online.renanlf.sysproc.model.Prosecution;
-import online.renanlf.sysproc.model.User;
 
 public interface ProsecutionRepository extends JpaRepository<Prosecution, Long> {
 	
-	Optional<Prosecution> findByProtocol(String protocol);
-	
-	List<Prosecution> findByDescriptionLike(String description);
-	
-	List<Prosecution> findByUser(User user);
+	List<Prosecution> findByUserEmail(String email);
+
+	Optional<Prosecution> findByUserEmailAndProtocol(String email, String protocol);
+
+	List<Prosecution> findByUserEmailAndDescriptionContainingIgnoreCase(String email, String description);
+
+	long deleteByUserEmailAndProtocol(String email, String protocol);
 
 }

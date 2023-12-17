@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import online.renanlf.sysproc.model.Prosecution;
 import online.renanlf.sysproc.repository.ProsecutionRepository;
@@ -18,23 +19,26 @@ public class ProsecutionService {
 	@Autowired
 	private UserService userService;
 	
-	public Optional<Prosecution> findByProtocol(String protocol) {
-		return repo.findByProtocol(protocol);
-	}
-	
-	public List<Prosecution> findByDescriptionLike(String description) {
-		return repo.findByDescriptionLike(description);
-	}
-	
 	public List<Prosecution> findByUserEmail(String email) {
-		var user = userService.findByEmail(email);
-		
-		return repo.findByUser(user);
+		return repo.findByUserEmail(email);
 	}
 
 	public Prosecution save(Prosecution prosecution, String email) {
 		prosecution.setUser(userService.findByEmail(email));
 		
 		return repo.save(prosecution);
+	}
+
+	public Optional<Prosecution> findByUserEmailAndProtocol(String email, String protocol) {
+		return repo.findByUserEmailAndProtocol(email, protocol);
+	}
+
+	public List<Prosecution> findByUserEmailAndDescriptionContainingIgnoreCase(String email, String description) {
+		return repo.findByUserEmailAndDescriptionContainingIgnoreCase(email, description);
+	}
+
+	@Transactional
+	public void deleteByUserEmailAndProtocol(String email, String protocol) {
+		repo.deleteByUserEmailAndProtocol(email, protocol);
 	}
 }

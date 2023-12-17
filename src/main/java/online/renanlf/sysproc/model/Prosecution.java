@@ -2,6 +2,12 @@ package online.renanlf.sysproc.model;
 
 import java.sql.Date;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +22,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "prosecution")
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE prosecution SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public @Data class Prosecution {
 
 	@Id @GeneratedValue
@@ -36,5 +44,8 @@ public @Data class Prosecution {
 	private String court;
 	
 	private String district;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Boolean deleted = false;
 	
 }
