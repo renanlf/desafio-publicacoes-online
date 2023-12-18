@@ -1,5 +1,6 @@
 package online.renanlf.sysproc.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import online.renanlf.sysproc.exceptions.DuplicateProtocolException;
+import online.renanlf.sysproc.model.Defendant;
 import online.renanlf.sysproc.model.Prosecution;
 import online.renanlf.sysproc.repository.ProsecutionRepository;
 
@@ -43,5 +45,9 @@ public class ProsecutionService {
 	@Transactional
 	public void deleteByUserEmailAndProtocol(String email, String protocol) {
 		repo.deleteByUserEmailAndProtocol(email, protocol);
+	}
+	
+	public Prosecution update(Prosecution prosecution) {
+		return repo.save(prosecution);
 	}
 }
