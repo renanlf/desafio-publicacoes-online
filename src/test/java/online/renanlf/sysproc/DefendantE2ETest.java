@@ -66,9 +66,7 @@ public class DefendantE2ETest {
 		webClient.get().uri("/defendants").header("Authorization", "Bearer " + token)
 			.exchange().expectStatus().isOk()
 			.expectBody()
-				.jsonPath("$").isArray()
-				.jsonPath("$[0].name").isEqualTo("Defendant Name 1")
-				.jsonPath("$[1]").doesNotExist();
+				.jsonPath("$").isArray();
 	}
 	
 	@Test

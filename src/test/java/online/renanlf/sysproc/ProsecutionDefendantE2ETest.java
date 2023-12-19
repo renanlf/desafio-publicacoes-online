@@ -26,15 +26,15 @@ public class ProsecutionDefendantE2ETest {
 	@BeforeAll
 	public static void createTokenAndData(@Autowired WebTestClient webClient) {
 		var bodyMap = new HashMap<String, String>();
-		bodyMap.put("email", "defendantTests@gmail.com");
+		bodyMap.put("email", "prosecDefTests@gmail.com");
 		bodyMap.put("name", "Renan Fernandes");
 		bodyMap.put("password", "123456");
 
 		webClient.post().uri("/users").contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(bodyMap))
-				.exchange().expectStatus().isOk().expectBody().jsonPath("email").isEqualTo("defendantTests@gmail.com");
+				.exchange().expectStatus().isOk().expectBody().jsonPath("email").isEqualTo("prosecDefTests@gmail.com");
 
 		Mono<LoginRequisition> mono = Mono
-				.just(LoginRequisition.builder().email("defendantTests@gmail.com").password("123456").build());
+				.just(LoginRequisition.builder().email("prosecDefTests@gmail.com").password("123456").build());
 
 		token = webClient.post().uri("/login").contentType(MediaType.APPLICATION_JSON)
 				.body(mono, LoginRequisition.class).exchange().expectBody(String.class).returnResult()
