@@ -1,6 +1,19 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet author="renanlf (generated)" id="1702687131983-1">
+    <changeSet author="renanlf (generated)" id="1703009071946-1">
+        <createTable tableName="defendant">
+            <column name="deleted" type="BOOLEAN"/>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="defendant_pkey"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="cpf_cnpj" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="record" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-2">
         <createTable tableName="login">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="login_pkey"/>
@@ -11,13 +24,58 @@
             <column name="token" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="renanlf (generated)" id="1702687131983-2">
+    <changeSet author="renanlf (generated)" id="1703009071946-3">
+        <createTable tableName="prosecution">
+            <column name="deleted" type="BOOLEAN"/>
+            <column name="opening_date" type="date"/>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="prosecution_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="court" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="district" type="VARCHAR(255)"/>
+            <column name="protocol" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-4">
+        <addUniqueConstraint columnNames="cpf_cnpj" constraintName="defendant_cpf_cnpj_key" tableName="defendant"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-5">
         <addUniqueConstraint columnNames="email" constraintName="login_email_key" tableName="login"/>
     </changeSet>
-    <changeSet author="renanlf (generated)" id="1702687131983-3">
+    <changeSet author="renanlf (generated)" id="1703009071946-6">
         <addUniqueConstraint columnNames="token" constraintName="login_token_key" tableName="login"/>
     </changeSet>
-    <changeSet author="renanlf (generated)" id="1702687131983-4">
+    <changeSet author="renanlf (generated)" id="1703009071946-7">
+        <addUniqueConstraint columnNames="protocol" constraintName="prosecution_protocol_key" tableName="prosecution"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-8">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="defendant_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-9">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="login_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-10">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="prosecution_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-11">
+        <createTable tableName="prosecution_defendants">
+            <column name="defendants_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prosecution_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-12">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="prosecution" constraintName="fk8tqvv3x3ai179c52jtyph2s1a" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="login" validate="true"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-13">
+        <addForeignKeyConstraint baseColumnNames="prosecution_id" baseTableName="prosecution_defendants" constraintName="fka6rbqqgxc8f84ngy7kgua0vwb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="prosecution" validate="true"/>
+    </changeSet>
+    <changeSet author="renanlf (generated)" id="1703009071946-14">
+        <addForeignKeyConstraint baseColumnNames="defendants_id" baseTableName="prosecution_defendants" constraintName="fkpln7l2oo83syepdpou5mivev" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="defendant" validate="true"/>
     </changeSet>
 </databaseChangeLog>
